@@ -2,6 +2,8 @@
 #include <stdint.h>
 #include <stddef.h>
 #define EFIAPI __attribute__((ms_abi))
+#define EFI_SUCCESS 0
+#define EFI_BUFFER_TOO_SMALL 5
 typedef uint64_t EFI_STATUS;
 typedef void* EFI_HANDLE;
 typedef uint64_t EFI_PHYSICAL_ADDRESS;
@@ -22,7 +24,7 @@ typedef struct {
 typedef struct {
     EFI_TABLE_HEADER Hdr; void* RaiseTPL; void* RestoreTPL; void* AllocatePages; void* FreePages;
     EFI_STATUS (EFIAPI *GetMemoryMap)(uint64_t* MemoryMapSize, EFI_MEMORY_DESCRIPTOR* MemoryMap, uint64_t* MapKey, uint64_t* DescriptorSize, uint32_t* DescriptorVersion);
-    void* AllocatePool; void* FreePool; void* CreateEvent; void* SetTimer; void* WaitForEvent; void* SignalEvent; void* CloseEvent; void* CheckEvent; void* InstallProtocolInterface; void* ReinstallProtocolInterface; void* UninstallProtocolInterface; void* HandleProtocol; void* Reserved; void* RegisterProtocolNotify; void* LocateHandle; void* LocateDevicePath; void* InstallConfigurationTable; void* LoadImage; void* StartImage; void* Exit; void* UnloadImage;
+    EFI_STATUS (EFIAPI *AllocatePool)(uint32_t PoolType, uint64_t Size, void** Buffer); void* FreePool; void* CreateEvent; void* SetTimer; void* WaitForEvent; void* SignalEvent; void* CloseEvent; void* CheckEvent; void* InstallProtocolInterface; void* ReinstallProtocolInterface; void* UninstallProtocolInterface; void* HandleProtocol; void* Reserved; void* RegisterProtocolNotify; void* LocateHandle; void* LocateDevicePath; void* InstallConfigurationTable; void* LoadImage; void* StartImage; void* Exit; void* UnloadImage;
     EFI_STATUS (EFIAPI *ExitBootServices)(EFI_HANDLE ImageHandle, uint64_t MapKey);
 } EFI_BOOT_SERVICES;
 typedef struct {
