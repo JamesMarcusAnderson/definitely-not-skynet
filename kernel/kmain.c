@@ -2,6 +2,7 @@
 #include "uefi.h"
 extern void serial_init(void);
 extern void serial_write_string(const char* str);
+extern void pcie_scan(void);
 static void uefi_print(EFI_SIMPLE_TEXT_OUTPUT_PROTOCOL* con, const uint16_t* s) { if (con && con->OutputString) con->OutputString(con, s); }
 void kmain(EFI_HANDLE image_handle, EFI_SYSTEM_TABLE* sys_table) {
     EFI_SIMPLE_TEXT_OUTPUT_PROTOCOL* con = sys_table->ConOut;
@@ -24,6 +25,7 @@ void kmain(EFI_HANDLE image_handle, EFI_SYSTEM_TABLE* sys_table) {
     if (status != 0) { serial_write_string("[FAIL] ExitBootServices failed - map_key stale, retry loop needed.\n"); return; }
     /* After this point BootServices / ConOut are gone. Serial only, in QEMU. */
     serial_write_string("[OK] Exited UEFI Boot Services. CPU is ours.\n");
+    pcie_scan();
     serial_write_string("[STUB] Reached bare-metal kmain. Halting CPU.\n");
     while (1) { __asm__ volatile("cli; hlt"); }
 }
