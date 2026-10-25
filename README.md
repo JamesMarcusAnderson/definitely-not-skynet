@@ -5,3 +5,7 @@ This is a secret project name for a bare-metal rebuild in progress. It is not a 
 ## Phase 1.1
 
 Phase 1.1 stub files are added. They are syntax-checked only. They are NOT yet boot-tested. GitHub Actions build validation is the next check. No benchmark claims are made.
+
+## Phase 0
+
+A PCIe scan is added after ExitBootServices. It finds Nvidia 0x10DE or AMD 0x1002 devices and prints BAR0. Finding a BAR is NOT a GPU driver. No GPU commands are sent, and no inference is run. This is NOT yet boot-tested. GitHub Actions build validation is the next check. No benchmark claims are made.
